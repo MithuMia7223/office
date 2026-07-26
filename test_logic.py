@@ -105,5 +105,26 @@ class TestOfficeTrackerLogic(unittest.TestCase):
         self.assertEqual(get_warning_message("Smoke"), "Apnar time shesh")
         self.assertEqual(get_warning_message("Other"), "Apnar time shesh")
 
+    def test_delete_user(self):
+        # Setup session & break for user
+        session, _ = crud.start_work_session(self.db, self.telegram_id)
+        brk = crud.start_break(self.db, session.id, "Eat")
+        
+        # Ensure user exists in db
+        user = self.db.query(User).filter(User.telegram_id == self.telegram_id).first()
+        self.assertIsNotNone(user)
+        
+        # Delete user
+        success = crud.delete_user(self.db, self.telegram_id)
+        self.assertTrue(success)
+        
+        # Ensure user is deleted
+        user_after = self.db.query(User).filter(User.telegram_id == self.telegram_id).first()
+        self.assertIsNone(user_after)
+        
+        # Ensure related work sessions & breaks are deleted
+        session_after = self.db.query(WorkSession).filter(WorkSession.telegram_id == self.telegram_id).first()
+        self.assertIsNone(session_after)
+
 if __name__ == "__main__":
     unittest.main()

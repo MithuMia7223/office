@@ -78,3 +78,19 @@ def end_work_session(db: Session, telegram_id: int):
     db.commit()
     db.refresh(active)
     return active
+
+def delete_user(db: Session, telegram_id: int) -> bool:
+    user = db.query(User).filter(User.telegram_id == telegram_id).first()
+    if not user:
+        return False
+    
+    # Delete all break logs and sessions using ORM delete
+    for session in list(user.sessions):
+        for brk in list(session.breaks):
+            db.delete(brk)
+        db.delete(session)
+        
+    # Delete the user
+    db.delete(user)
+    db.commit()
+    return True

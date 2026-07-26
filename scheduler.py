@@ -49,6 +49,9 @@ async def run_scheduler_loop(bot_app):
                             db.commit()
                         except Exception as e:
                             logger.error(f"Failed to send message to user {telegram_id}: {e}")
+                            # Mark as notified to prevent infinite retry loops on blocked chats
+                            brk.notified = True
+                            db.commit()
                             
         except Exception as e:
             logger.error(f"Error in scheduler loop: {e}")
