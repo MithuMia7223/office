@@ -2,19 +2,19 @@ import asyncio
 import logging
 from datetime import datetime
 from database import SessionLocal
-from models import BreakLog, WorkSession
+from models import BreakLog, WorkSession, User
 from bot import get_break_limit
 
 logger = logging.getLogger(__name__)
 
 def get_warning_message(break_type: str) -> str:
     if break_type == "Eat":
-        return "Apnar 30 minute time shesh hoye geche"
+        return "Your 30-minute break time is up!"
     elif break_type == "Toilet":
-        return "Apnar 15 minute time shesh"
+        return "Your 15-minute break time is up!"
     elif break_type in ["Smoke", "Other"]:
-        return "Apnar time shesh"
-    return "Apnar break-er time shesh"
+        return "Your break time is up!"
+    return "Your break time is up!"
 
 async def run_scheduler_loop(bot_app):
     if not bot_app:

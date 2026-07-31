@@ -1,5 +1,28 @@
+# Environment & Secrets
 .env
+*.env
+
+# Database
 office.db
+*.db
+*.sqlite3
+
+# Logs
+*.log
+bot_stdout.log
+bot_stderr.log
+
+# Python
 __pycache__/
-.DS_Store
 *.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+
+# Mac
+.DS_Store
+
+# Group chat ID (server-specific)
+group_chat_id.txt

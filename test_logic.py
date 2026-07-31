@@ -100,10 +100,10 @@ class TestOfficeTrackerLogic(unittest.TestCase):
         self.assertAlmostEqual(actual_work_seconds, 2400, delta=10)
 
     def test_warning_message_selection(self):
-        self.assertEqual(get_warning_message("Eat"), "Apnar 30 minute time shesh hoye geche")
-        self.assertEqual(get_warning_message("Toilet"), "Apnar 15 minute time shesh")
-        self.assertEqual(get_warning_message("Smoke"), "Apnar time shesh")
-        self.assertEqual(get_warning_message("Other"), "Apnar time shesh")
+        self.assertEqual(get_warning_message("Eat"), "Your 30-minute break time is up!")
+        self.assertEqual(get_warning_message("Toilet"), "Your 15-minute break time is up!")
+        self.assertEqual(get_warning_message("Smoke"), "Your break time is up!")
+        self.assertEqual(get_warning_message("Other"), "Your break time is up!")
 
     def test_delete_user(self):
         # Setup session & break for user
